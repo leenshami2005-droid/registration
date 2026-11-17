@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class Student {
+  - id: String
+  - name: String
+  + getId(): String
+  + getName(): String
+}
+
+class Course {
+  - code: String
+  - title: String
+  - creditHours: int
+  - capacity: int
+  + hasAvailableSeat(): boolean
+  + getRemainingSeats(): int
+}
+
+class Registration {
+  - student: Student
+  - course: Course
+  - date: LocalDate
+  + getStudent(): Student
+  + getCourse(): Course
+}
+
+class RegistrationSystem {
+  - students: List<Student>
+  - courses: List<Course>
+  - registrations: List<Registration>
+  + addStudent(id: String, name: String): boolean
+  + addCourse(code: String, title: String, hours: int, capacity: int): boolean
+  + listAvailableCourses(): List<Course>
+  + register(studentId: String, courseCode: String): boolean
+  + getStudentCourses(studentId: String): List<Course>
+}
+
+RegistrationSystem "1" o-- "*" Student
+RegistrationSystem "1" o-- "*" Course
+RegistrationSystem "1" o-- "*" Registration
+Registration "*" --> "1" Student
+Registration "*" --> "1" Course
+@enduml
