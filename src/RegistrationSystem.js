@@ -2,15 +2,6 @@ const Student = require('./Student');
 const Course = require('./Course');
 const Registration = require('./Registration');
 
-/**
- * The only class that stores data. It holds the three collections and
- * enforces every business rule (BR-1 to BR-5).
- *
- * IMPORTANT: this class never prints anything and never reads input.
- * That is what makes it testable by Jest without the console (NFR-5).
- * Every method returns { success, message, data } so main.js can decide
- * what to display.
- */
 class RegistrationSystem {
   constructor() {
     this.students = [];
@@ -18,8 +9,6 @@ class RegistrationSystem {
     this.registrations = [];
     this.maxCreditHours = 18;
   }
-
-  // ---------- helpers ----------
 
   findStudent(studentId) {
     return this.students.find((s) => s.getId() === studentId);
@@ -35,9 +24,6 @@ class RegistrationSystem {
     );
   }
 
-  // ---------- FR-1 ----------
-
-  /** Adds a student. Enforces BR-1 (unique ID) and BR-5 (no empty fields). */
   addStudent(id, name, password) {
     if (!id || String(id).trim() === '') {
       return { success: false, message: 'Student ID cannot be empty.' };
@@ -54,7 +40,6 @@ class RegistrationSystem {
     return { success: true, message: `Student ${name} added.`, data: student };
   }
 
-  /** Authenticates a student account by its assigned ID and password. */
   authenticateStudent(studentId, password) {
     const student = this.findStudent(studentId);
     if (!student || !student.verifyPassword(password)) {
@@ -64,9 +49,6 @@ class RegistrationSystem {
     return { success: true, message: `Welcome, ${student.getName()}.`, data: student };
   }
 
-  // ---------- FR-2 ----------
-
-  /** Adds a course. Enforces BR-2 (unique code) and BR-5 (positive numbers). */
   addCourse(code, title, creditHours, capacity) {
     if (!code || String(code).trim() === '') {
       return { success: false, message: 'Course code cannot be empty.' };
@@ -89,16 +71,10 @@ class RegistrationSystem {
     return { success: true, message: `Course ${code} added.`, data: course };
   }
 
-  // ---------- FR-3 ----------
-
-  /** Returns every stored course. An empty list is not an error. */
   listAvailableCourses() {
     return this.courses;
   }
 
-  // ---------- FR-4 ----------
-
-  /** Registers a student in a course. Enforces BR-3 and BR-4. */
   register(studentId, courseCode) {
     const student = this.findStudent(studentId);
     if (!student) {
@@ -139,9 +115,6 @@ class RegistrationSystem {
     };
   }
 
-  // ---------- FR-5 ----------
-
-  /** Returns the courses a student is registered in. Enforces BR-3. */
   getStudentCourses(studentId) {
     const student = this.findStudent(studentId);
     if (!student) {

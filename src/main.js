@@ -1,12 +1,6 @@
 const readline = require('readline');
 const RegistrationSystem = require('./RegistrationSystem');
 
-/**
- * The console menu. This is the ONLY file that reads input and prints.
- * All the rules live in RegistrationSystem, which is why that class
- * can be tested without the console.
- */
-
 const system = new RegistrationSystem();
 
 const rl = readline.createInterface({

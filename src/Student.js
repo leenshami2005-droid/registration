@@ -1,7 +1,3 @@
-/**
- * A student recorded in the system.
- * Holds its own details only - it knows nothing about courses.
- */
 class Student {
   constructor(id, name, password) {
     this.id = id;
